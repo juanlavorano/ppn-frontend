@@ -1,8 +1,12 @@
 {
-  "name": "guardians-test",
+  "name": "guardians-nft",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@polkadot/api": "^7.15.1",
+    "@polkadot/extension-dapp": "^0.42.10",
+    "@polkadot/hw-ledger": "^8.7.1",
+    "@polkadot/util-crypto": "^8.7.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
