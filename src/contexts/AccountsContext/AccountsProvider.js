@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AccountsContext from "./AccountsContext";
-import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
+import {
+  web3Accounts,
+  web3Enable,
+  web3FromAddress,
+} from "@polkadot/extension-dapp";
 
 export default function AccountsProvider({ children }) {
   const [accounts, setAccounts] = useState([]);
-  const [currentAccount, setCurrentAccount] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState(null);
 
   // Get extensions addresses
   const getAccounts = useCallback(async () => {
@@ -15,14 +19,28 @@ export default function AccountsProvider({ children }) {
       setAccounts(foundAccounts);
   }, [accounts.length]);
 
+  const connectAccount = useCallback(
+    async (account) => {
+      const foundAccount = accounts.find(
+        (acc) => acc.address === account.address
+      );
+
+      setSelectedAccount(foundAccount);
+
+      const injector = await web3FromAddress(foundAccount.address);
+      return injector;
+    },
+    [accounts]
+  );
+
   useEffect(() => {
     getAccounts();
-
-    if (!currentAccount) setCurrentAccount(accounts[0]);
-  }, [accounts, currentAccount, getAccounts]);
+  }, [accounts, connectAccount, getAccounts]);
 
   return (
-    <AccountsContext.Provider value={{ accounts, currentAccount }}>
+    <AccountsContext.Provider
+      value={{ accounts, selectedAccount, setSelectedAccount, connectAccount }}
+    >
       {children}
     </AccountsContext.Provider>
   );

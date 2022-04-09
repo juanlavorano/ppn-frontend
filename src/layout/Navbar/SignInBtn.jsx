@@ -26,11 +26,11 @@ const AnimBtn = ({ children, onClick }) => (
 
 const SignInBtn = () => {
   // eslint-disable-next-line no-unused-vars
-  const [username, setUsername] = useState("Juan");
+  const [username, setUsername] = useState();
 
   return (
     <LazyMotion features={domAnimation}>
-      <AnimBtn>{username.length ? username : `Connect`}</AnimBtn>
+      <AnimBtn>{username ? username : `Connect`}</AnimBtn>
     </LazyMotion>
   );
 };

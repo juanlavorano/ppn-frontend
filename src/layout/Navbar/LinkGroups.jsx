@@ -1,7 +1,7 @@
 import React from "react";
 import useResponsiveness from "hooks/useResponsiveness";
 import { DESKTOP } from "constants/devices";
-import { NavLink  } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const LinkContainer = styled.div`
@@ -16,7 +16,7 @@ const LinkContainer = styled.div`
     color: ${(props) => props.theme.colors.black};
     transition: color 0.2s ease;
     &:hover {
-      color:${props => props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.primary};
     }
   }
 `;
@@ -32,7 +32,6 @@ const InfoContainer = styled.div`
     text-decoration-thickness: 0.1rem;
   }
 `;
-
 
 const LinkGroups = () => {
   const { currentDevice } = useResponsiveness();
@@ -53,9 +52,10 @@ const LinkGroups = () => {
           <NavLink
             key={route.link}
             to={route.link}
-            exact
-            className="nav-links"
-            activeClassName="nav-selected"
+            end
+            className={(navData) =>
+              navData.isActive ? "nav-selected" : "nav-links"
+            }
           >
             {route.name}
           </NavLink>
@@ -66,17 +66,19 @@ const LinkGroups = () => {
         <InfoContainer>
           <NavLink
             to="/terms-of-service"
-            exact
-            className="nav-links"
-            activeClassName="nav-selected"
+            end
+            className={(navData) =>
+              navData.isActive ? "nav-selected" : "nav-links"
+            }
           >
             Terms of Service
           </NavLink>
           <NavLink
             to="/privacy-policy"
-            exact
-            className="nav-links"
-            activeClassName="nav-selected"
+            end
+            className={(navData) =>
+              navData.isActive ? "nav-selected" : "nav-links"
+            }
           >
             Privacy Policy
           </NavLink>

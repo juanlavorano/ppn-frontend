@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `;
 
 const DropdownContainer = styled.div`
-  background: var(--app-modal-btn-primary);
+  background: ${props => props.theme.colors.background}
   border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
@@ -33,7 +33,7 @@ const DropdownContainer = styled.div`
     color: var(--app-text);
     white-space: nowrap;
     &:hover {
-      background: var(--app-container-bg-secondary);
+      background: ${props => props.theme.colors.primary}
     }
   }
 `;
