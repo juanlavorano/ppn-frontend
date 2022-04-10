@@ -1,4 +1,4 @@
-import LoadingIcon from "@static/svg/LoadingIcon";
+import LoadingIcon from "components/LoadingIcon";
 import React from "react";
 import styled, { css } from "styled-components";
 
