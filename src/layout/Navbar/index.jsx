@@ -11,7 +11,7 @@ import { DESKTOP } from "constants/devices";
 import { APP_NAME } from "constants/app";
 
 const Nav = styled.nav`
-  position: fixed;
+  position: sticky;
   width: 100%;
   display: flex;
   align-items: center;

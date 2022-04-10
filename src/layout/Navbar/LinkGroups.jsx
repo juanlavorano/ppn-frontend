@@ -9,6 +9,7 @@ const LinkContainer = styled.div`
   grid-auto-flow: column;
   gap: 1.5rem;
   .nav-selected {
+    text-decoration: none;
     color: ${(props) => props.theme.colors.secondary} !important;
   }
   .nav-links {
