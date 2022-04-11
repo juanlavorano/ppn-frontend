@@ -12,7 +12,11 @@ export function createRoutes(routes) {
           const Component = route.component;
 
           return (
+<<<<<<< HEAD
             <Route
+=======
+            <Route  
+>>>>>>> home-ui
               key={route.path}
               exact={route.exact}
               path={route.path}

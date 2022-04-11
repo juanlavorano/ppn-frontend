@@ -24,13 +24,21 @@ const AnimBtn = ({ children, onClick }) => (
   </Btn>
 );
 
-const SignInBtn = () => {
+const SignInBtn = (values) => {
   // eslint-disable-next-line no-unused-vars
   const [username, setUsername] = useState();
+  const { accounts, connectAccount } = values.values;
+
+  const handleOnClick = async () => {
+    const injector = await connectAccount(accounts[0])
+    console.log(injector);
+  };
 
   return (
     <LazyMotion features={domAnimation}>
-      <AnimBtn>{username ? username : `Connect`}</AnimBtn>
+      <AnimBtn onClick={handleOnClick}>
+        {username ? username : `Connect`}
+      </AnimBtn>
     </LazyMotion>
   );
 };

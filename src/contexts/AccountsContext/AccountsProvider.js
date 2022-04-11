@@ -39,7 +39,12 @@ export default function AccountsProvider({ children }) {
 
   return (
     <AccountsContext.Provider
-      value={{ accounts, selectedAccount, setSelectedAccount, connectAccount }}
+      value={{
+        accounts,
+        selectedAccount,
+        setSelectedAccount,
+        connectAccount,
+      }}
     >
       {children}
     </AccountsContext.Provider>
