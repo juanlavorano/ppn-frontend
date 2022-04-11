@@ -3,12 +3,13 @@ import Divider from "components/Divider";
 import LinkGroups from "./LinkGroups";
 import MenuToggle from "./MenuToggle";
 import Navigation from "./Navigation";
-import SignInBtn from "./SignInBtn"
+import SignInBtn from "./SignInBtn";
 import { useCycle } from "framer-motion";
 import styled from "styled-components";
 import useResponsiveness from "hooks/useResponsiveness";
 import { DESKTOP } from "constants/devices";
 import { APP_NAME } from "constants/app";
+import AccountsContext from "contexts/AccountsContext/AccountsContext";
 
 const Nav = styled.nav`
   position: sticky;
@@ -29,7 +30,7 @@ const Nav = styled.nav`
     content: "";
     bottom: 0;
     left: 0;
-    background: ${props => props.theme.colors.primary}
+    background: ${(props) => props.theme.colors.primary}
     height: 1px;
     width: 100%;
     display: block;
@@ -48,7 +49,7 @@ const LogoContainer = styled.a`
   font-size: 2rem;
   font-weight: 900;
   text-decoration: none;
-  color: ${props => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.primary};
   span,
   svg {
     vertical-align: middle;
@@ -91,7 +92,9 @@ const Navbar = React.memo(() => {
           <>
             <LinkGroups />
             <Divider />
-            <SignInBtn />
+            <AccountsContext.Consumer>
+              {(accountsContext) => <SignInBtn values={accountsContext} />}
+            </AccountsContext.Consumer>
           </>
         ) : (
           <>

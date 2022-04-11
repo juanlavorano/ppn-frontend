@@ -12,7 +12,7 @@ export function createRoutes(routes) {
           const Component = route.component;
 
           return (
-            <Route
+            <Route  
               key={route.path}
               exact={route.exact}
               path={route.path}
