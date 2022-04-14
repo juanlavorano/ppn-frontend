@@ -1,11 +1,8 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { LazyMotion, domAnimation, m } from "framer-motion";
-import { DividerHorizontal } from "components/Divider";
 import "simplebar/src/simplebar.css";
 import SimpleBar from "simplebar-react";
-import Select from "react-select";
-import { styles } from "styles/reactSelectStyles";
 import useEscape from "hooks/useEscape";
 import { truncateAddress } from "utils/formatters";
 import useAccounts from "hooks/useAccounts";
@@ -214,16 +211,6 @@ const Content = styled.p`
   color: hsl(240, 6%, 75%);
 `;
 
-const StyledSelect = styled(Select)`
-  --app-theme-opacity: 0.25;
-  --app-theme-text: rgb(211 231 255);
-  --app-theme-text-transparent: rgba(211, 231, 255, var(--app-theme-opacity));
-  position: relative;
-  font-size: 1rem;
-  z-index: 3;
-  height: 100%;
-`;
-
 const elemContains = (rect, x, y) => {
   return rect
     ? rect.x <= x &&
@@ -233,63 +220,9 @@ const elemContains = (rect, x, y) => {
     : false;
 };
 
-const NetworkSwitchButton = () => {
-  const options = [
-    {
-      value: "reef_testnet",
-      label: "Testnet",
-    },
-    {
-      value: "reef_mainnet",
-      label: "Mainnet",
-    },
-  ];
-
-  const modifiedStyles = {
-    ...styles,
-    control: (base, state) => ({
-      ...base,
-      boxShadow: state.isFocused ? 0 : 0,
-      border: "solid 0.15rem rgb(13, 104, 216)",
-      background: "rgba(rgb(13, 104, 216), 0.5)",
-      color: "var(--app-theme-text)",
-      borderRadius: "0.5rem",
-      height: "100%",
-      "&:hover": {
-        boxShadow: 0,
-      },
-    }),
-    indicatorSeparator: (base) => ({
-      ...base,
-      background: "var(--app-theme-text-transparent)",
-    }),
-    dropdownIndicator: (base, state) => ({
-      ...base,
-      color:
-        state.isSelected || state.isFocused
-          ? "hsl(0, 0%, 100%)"
-          : "var(--app-theme-text)",
-      "&:hover": {
-        color: "hsl(0, 0%, 100%)",
-      },
-    }),
-  };
-
-  return (
-    <StyledSelect
-      options={options}
-      value={options[0]}
-      styles={modifiedStyles}
-      isSearchable={false}
-      placeholder="Select Route"
-      // onChange={handleNetworkChange}
-    />
-  );
-};
-
 const AccountSelect = ({ isActive, setIsActive }) => {
   const [elemIsVisible, setElemIsVisible] = useState(isActive);
-  const { accounts } = useAccounts();
+  const { accounts, setSelectedAccount } = useAccounts();
 
   const initialClaimButtonText = "I Accept";
   const [claimButtonText, setClaimButtonText] = useState(
@@ -302,8 +235,13 @@ const AccountSelect = ({ isActive, setIsActive }) => {
   const [alertIsVisible, setAlertIsVisible] = useState(alert.isActive);
   const modalRef = useRef();
   const alertRef = useRef();
-  //eslint-disable-next-line
-  const [selectedAccount, setSelectedAccount] = useState(null);
+
+  const handleAccountChange = (account) => {
+    const matchedAccount = accounts.find(
+      (acc) => acc.address === account.address
+    );
+    setSelectedAccount(matchedAccount);
+  };
 
   useEffect(() => {
     if (isActive === false) {
@@ -362,16 +300,6 @@ const AccountSelect = ({ isActive, setIsActive }) => {
           onTouchStart={handleClickOutside}
         >
           <Modal remove={!isActive} ref={modalRef}>
-            <span className="close-btn" onClick={closeModal}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path>
-              </svg>
-            </span>
-
             <Title>Choose an account</Title>
             <StyledSimpleBar style={{ maxHeight: 300 }}>
               {accounts?.length ? (
@@ -380,6 +308,7 @@ const AccountSelect = ({ isActive, setIsActive }) => {
                     ? accounts.map((account, index) => {
                         return (
                           <m.p
+                            onClick={() => handleAccountChange(account)}
                             className="account-name"
                             whileHover={{
                               y: -2.5,
@@ -403,11 +332,6 @@ const AccountSelect = ({ isActive, setIsActive }) => {
                 "Please connect your wallet"
               )}
             </StyledSimpleBar>
-
-            <>
-              <DividerHorizontal />
-              <NetworkSwitchButton />
-            </>
           </Modal>
           {alertIsVisible && (
             <Alert remove={!alert.isActive} ref={alertRef}>

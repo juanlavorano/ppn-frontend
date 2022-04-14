@@ -3,6 +3,7 @@ import styled from "styled-components";
 import AccountSelect from "./AccountSelect";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { BtnBaseAnimated } from "components/Buttons";
+import useAccounts from "hooks/useAccounts";
 
 const Btn = styled(BtnBaseAnimated)`
   display: flex;
@@ -27,13 +28,14 @@ const AnimBtn = ({ children, onClick }) => (
 
 const SignInBtn = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { selectedAccount } = useAccounts();
 
   const handleOpen = () => setIsOpen((prevState) => !prevState);
 
   return (
     <LazyMotion features={domAnimation}>
       <AnimBtn onClick={handleOpen}>
-        <p>Connect</p>
+        {selectedAccount ? selectedAccount.meta.name : "Choose account"}
       </AnimBtn>
       <AccountSelect isActive={isOpen} setIsActive={setIsOpen} />
     </LazyMotion>
