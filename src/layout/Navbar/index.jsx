@@ -9,7 +9,6 @@ import styled from "styled-components";
 import useResponsiveness from "hooks/useResponsiveness";
 import { DESKTOP } from "constants/devices";
 import { APP_NAME } from "constants/app";
-import AccountsContext from "contexts/AccountsContext/AccountsContext";
 
 const Nav = styled.nav`
   position: sticky;
@@ -92,9 +91,7 @@ const Navbar = React.memo(() => {
           <>
             <LinkGroups />
             <Divider />
-            <AccountsContext.Consumer>
-              {(accountsContext) => <SignInBtn values={accountsContext} />}
-            </AccountsContext.Consumer>
+            <SignInBtn />
           </>
         ) : (
           <>

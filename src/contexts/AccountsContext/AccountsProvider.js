@@ -24,9 +24,7 @@ export default function AccountsProvider({ children }) {
       const foundAccount = accounts.find(
         (acc) => acc.address === account.address
       );
-
       setSelectedAccount(foundAccount);
-
       const injector = await web3FromAddress(foundAccount.address);
       return injector;
     },

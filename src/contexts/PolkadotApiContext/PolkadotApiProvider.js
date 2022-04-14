@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PolkadotApiContext from "./PolkadotApiContext";
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { POLKADOT_NODE } from "constants/networks";
+import { REEF_WS_TESTNET } from "constants/networks";
 
 export default function PolkadotApiProvider({ children }) {
   const [chain, setChain] = useState(null);
@@ -11,7 +11,7 @@ export default function PolkadotApiProvider({ children }) {
 
   const connect = useCallback(async () => {
     // Initialise the provider to connect to the local node
-    const provider = new WsProvider(POLKADOT_NODE);
+    const provider = new WsProvider(REEF_WS_TESTNET);
 
     // Create the API and wait until ready
     const api = await ApiPromise.create({ provider });
@@ -23,17 +23,16 @@ export default function PolkadotApiProvider({ children }) {
       api.rpc.system.version(),
     ]);
 
-    return { chain, nodeName, nodeVersion, api };
-  }, []);
-
-  useEffect(() => {
-    const { chain, nodeName, nodeVersion, api } = connect();
-
     setChain(chain);
     setNodeName(nodeName);
     setNodeVersion(nodeVersion);
     setApi(api);
 
+    return { chain, nodeName, nodeVersion, api };
+  }, []);
+
+  useEffect(() => {
+    connect();
   }, [connect]);
 
   return (

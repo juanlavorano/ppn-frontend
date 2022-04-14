@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import AccountSelect from "./AccountSelect";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { BtnBaseAnimated } from "components/Buttons";
 
@@ -24,21 +25,17 @@ const AnimBtn = ({ children, onClick }) => (
   </Btn>
 );
 
-const SignInBtn = (values) => {
-  // eslint-disable-next-line no-unused-vars
-  const [username, setUsername] = useState();
-  const { accounts, connectAccount } = values.values;
+const SignInBtn = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleOnClick = async () => {
-    const injector = await connectAccount(accounts[0])
-    console.log(injector);
-  };
+  const handleOpen = () => setIsOpen((prevState) => !prevState);
 
   return (
     <LazyMotion features={domAnimation}>
-      <AnimBtn onClick={handleOnClick}>
-        {username ? username : `Connect`}
+      <AnimBtn onClick={handleOpen}>
+        <p>Connect</p>
       </AnimBtn>
+      <AccountSelect isActive={isOpen} setIsActive={setIsOpen} />
     </LazyMotion>
   );
 };

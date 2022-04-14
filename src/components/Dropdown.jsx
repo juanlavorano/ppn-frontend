@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `;
 
 const DropdownContainer = styled.div`
-  background: ${props => props.theme.colors.background}
+  background: ${(props) => props.theme.colors.secondary};
   border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
@@ -30,44 +30,22 @@ const DropdownContainer = styled.div`
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
     text-decoration: none;
-    color: var(--app-text);
+    color: ${(props) => props.theme.colors.white}
     white-space: nowrap;
     &:hover {
-      background: ${props => props.theme.colors.primary}
+      background: hsl(236, 10%, 23%;
     }
   }
 `;
 
-const Option = styled(NavLink)``;
+const Option = styled.div``;
 
 const Dropdown = ({ options }) => {
   return (
     <Wrapper className="dropdown-content">
       <DropdownContainer>
         {options.map((option) => (
-          <Option key={option.name} to={option.link}>
-            {option.name}
-          </Option>
-        ))}
-      </DropdownContainer>
-    </Wrapper>
-  );
-};
-
-export const DropdownHelp = ({ options, isVisible }) => {
-  return (
-    <Wrapper type={`help`} className="dropdown-content">
-      <DropdownContainer>
-        {options.map((option) => (
-          <React.Fragment key={option.name}>
-            {option.external ? (
-              <a href={option.link} target="_blank" rel="noopener noreferrer">
-                {option.name}
-              </a>
-            ) : (
-              <Option to={option.link}>{option.name}</Option>
-            )}
-          </React.Fragment>
+          <Option key={option.meta.name}>{option.meta.name}</Option>
         ))}
       </DropdownContainer>
     </Wrapper>
