@@ -3,36 +3,54 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@polkadot/api": "^7.15.1",
-    "@polkadot/extension-dapp": "^0.42.10",
-    "@polkadot/hw-ledger": "^8.7.1",
-    "@polkadot/keyring": "^8.7.1",
-    "@polkadot/util-crypto": "^8.7.1",
+    "@craco/craco": "^6.4.3",
+    "@open-wc/webpack-import-meta-loader": "^0.4.7",
+    "@open-web3/dev-config": "^0.1.13",
+    "@open-web3/scanner": "^1.0.1",
+    "@polkadot/api": "~6.4.2",
+    "@polkadot/keyring": "~7.9.2",
+    "@polkadot/rpc-provider": "~6.4.2",
+    "@polkadot/types": "~6.4.2",
+    "@polkadot/util": "~7.9.2",
+    "@polkadot/util-crypto": "~7.9.2",
+    "@reef-defi/api": "^1.0.4",
+    "@reef-defi/api-derive": "^1.0.4",
+    "@reef-defi/evm-provider": "^1.0.4",
+    "@reef-defi/extension-dapp": "^0.41.4",
+    "@reef-defi/type-definitions": "^1.0.4",
+    "@reef-defi/types": "^1.0.4",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
     "axios": "^0.26.1",
-    "framer-motion": "^6.2.9",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "ethers": "^5.6.4",
+    "framer-motion": "^4.1.17",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.0",
+    "react-scripts": "4.0.3",
     "react-select": "^5.3.0",
     "simplebar-react": "^2.3.6",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.16.7",
+    "craco-alias": "^3.0.1",
+    "prettier": "^2.5.1",
+    "standard-version": "^9.3.2"
   },
   "browserslist": {
     "production": [

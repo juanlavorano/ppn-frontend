@@ -1,4 +1,4 @@
-import usePolkadotApi from "./usePolkadotApi";
+import usePolkadotApi from "./useReefNetwork";
 import { getInjector } from "utils/connect";
 
 export default function useTransactions(account) {

@@ -222,7 +222,7 @@ const elemContains = (rect, x, y) => {
 
 const AccountSelect = ({ isActive, setIsActive }) => {
   const [elemIsVisible, setElemIsVisible] = useState(isActive);
-  const { accounts, setSelectedAccount } = useAccounts();
+  const { accounts, selectAccount } = useAccounts();
 
   const initialClaimButtonText = "I Accept";
   const [claimButtonText, setClaimButtonText] = useState(
@@ -236,11 +236,12 @@ const AccountSelect = ({ isActive, setIsActive }) => {
   const modalRef = useRef();
   const alertRef = useRef();
 
-  const handleAccountChange = (account) => {
+  const handleAccountChange = async (account) => {
     const matchedAccount = accounts.find(
       (acc) => acc.address === account.address
     );
-    setSelectedAccount(matchedAccount);
+    await selectAccount(matchedAccount);
+    setIsActive(false);
   };
 
   useEffect(() => {

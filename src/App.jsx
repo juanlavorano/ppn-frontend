@@ -1,6 +1,6 @@
 import React from "react";
 import ThemeProvider from "styles/ThemeProvider";
-import PolkadotApiProvider from "contexts/PolkadotApiContext/PolkadotApiProvider";
+import ReefNetworkProvider from "@contexts/ReefNetworkContext/ReefNetworkProvider";
 import AccountsProvider from "contexts/AccountsContext/AccountsProvider";
 import { BrowserRouter } from "react-router-dom";
 import { createRoutes, routes } from "./routes";
@@ -8,13 +8,13 @@ import { createRoutes, routes } from "./routes";
 function App() {
   return (
     <BrowserRouter>
-      <PolkadotApiProvider>
+      <ReefNetworkProvider>
         <AccountsProvider>
           <ThemeProvider>
             {createRoutes(routes)}
           </ThemeProvider>
         </AccountsProvider>
-      </PolkadotApiProvider>
+      </ReefNetworkProvider>
     </BrowserRouter>
   );
 }

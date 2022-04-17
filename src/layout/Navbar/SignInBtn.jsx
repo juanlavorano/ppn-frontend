@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import AccountSelect from "./AccountSelect";
 import { LazyMotion, domAnimation } from "framer-motion";
@@ -31,12 +31,18 @@ const SignInBtn = () => {
   const { selectedAccount } = useAccounts();
 
   const handleOpen = () => setIsOpen((prevState) => !prevState);
+  
+  const buttonText = useCallback(() => {
+    if (selectedAccount) {
+      return selectedAccount.meta.name;
+    } else {
+      return "Choose account";
+    }
+  }, [selectedAccount]);
 
   return (
     <LazyMotion features={domAnimation}>
-      <AnimBtn onClick={handleOpen}>
-        {selectedAccount ? selectedAccount.meta.name : "Choose account"}
-      </AnimBtn>
+      <AnimBtn onClick={handleOpen}>{buttonText()}</AnimBtn>
       <AccountSelect isActive={isOpen} setIsActive={setIsOpen} />
     </LazyMotion>
   );
