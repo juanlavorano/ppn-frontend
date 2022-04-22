@@ -7,8 +7,9 @@ import backgroundImage from "static/svg/background-image.svg";
 const Container = styled.div`
   background-image: url(${backgroundImage});
   background-repeat: no-repeat;
-  padding: 5rem;
+  padding: 10rem;
   display: flex;
+  flex-direction: column;
   height: 80vh;
 `;
 

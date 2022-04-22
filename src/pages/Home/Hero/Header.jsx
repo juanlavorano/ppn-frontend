@@ -9,8 +9,8 @@ const HeaderContainer = styled.h1`
   margin: auto;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  padding: 2.5rem;
+  align-items: flex-start;
+  padding: 2.5rem 8rem;
 `;
 
 const HighlightedSpan = styled.span`
@@ -21,10 +21,10 @@ export default function Header() {
   return (
     <HeaderContainer>
       <div>
-        Buy <HighlightedSpan>Guardians</HighlightedSpan>
+        Go <HighlightedSpan>Private</HighlightedSpan>
       </div>
       <div>
-        Buy <HighlightedSpan>Reef</HighlightedSpan>
+        Get <HighlightedSpan>Private People Networks</HighlightedSpan>
       </div>
     </HeaderContainer>
   );
