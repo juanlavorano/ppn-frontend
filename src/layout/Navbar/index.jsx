@@ -8,7 +8,8 @@ import { useCycle } from "framer-motion";
 import styled from "styled-components";
 import useResponsiveness from "hooks/useResponsiveness";
 import { DESKTOP } from "constants/devices";
-import { APP_NAME } from "constants/app";
+import Logo from "components/Logo";
+import colors from "styles/colors";
 
 const Nav = styled.nav`
   position: sticky;
@@ -45,10 +46,8 @@ const LogoContainer = styled.a`
   user-select: none;
   display: inline-block;
   align-items: center;
-  font-size: 2rem;
   font-weight: 900;
   text-decoration: none;
-  color: ${(props) => props.theme.colors.primary};
   span,
   svg {
     vertical-align: middle;
@@ -84,7 +83,7 @@ const Navbar = React.memo(() => {
   return (
     <Nav blur={!isAtTop}>
       <LogoContainer href="/" className="animate-icon">
-        <span>{APP_NAME}</span>
+        <Logo height={30} color={colors.background} />
       </LogoContainer>
       <ContentContainer>
         {currentDevice === DESKTOP ? (

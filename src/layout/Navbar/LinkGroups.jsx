@@ -45,6 +45,10 @@ const LinkGroups = () => {
       name: "Collection",
       link: "/collection",
     },
+    {
+      name: "Roadmap",
+      link: "/roadmap"
+    }
   ];
   return (
     <LinkContainer>

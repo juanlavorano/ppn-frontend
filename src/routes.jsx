@@ -12,7 +12,7 @@ export function createRoutes(routes) {
           const Component = route.component;
 
           return (
-            <Route  
+            <Route
               key={route.path}
               exact={route.exact}
               path={route.path}
@@ -40,5 +40,10 @@ export const routes = [
     path: "/collection",
     layout: Layout,
     component: lazy(() => import("pages/Collection")),
+  },
+  {
+    path: "/roadmap",
+    layout: Layout,
+    component: lazy(() => import("pages/Roadmap")),
   },
 ];
