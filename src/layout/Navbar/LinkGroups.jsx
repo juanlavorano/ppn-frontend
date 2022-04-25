@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useResponsiveness from "hooks/useResponsiveness";
 import { DESKTOP } from "constants/devices";
 import { NavLink } from "react-router-dom";
@@ -36,10 +36,8 @@ const InfoContainer = styled.div`
   }
 `;
 
-const LinkGroups = () => {
+const LinkGroups = ({ isAtTop }) => {
   const { currentDevice } = useResponsiveness();
-  const offsetLimit = 40;
-  const [isAtTop, setIsAtTop] = useState(true);
 
   const routes = [
     {
@@ -55,14 +53,6 @@ const LinkGroups = () => {
       link: "/roadmap",
     },
   ];
-
-  useEffect(() => {
-    window.onscroll = () => {
-      isAtTop === true && setIsAtTop(false);
-      window.pageYOffset <= offsetLimit && setIsAtTop(true);
-    };
-    return () => (window.onscroll = null);
-  });
 
   return (
     <LinkContainer isAtTop={isAtTop}>

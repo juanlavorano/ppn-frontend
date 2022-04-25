@@ -88,7 +88,7 @@ const Navbar = React.memo(() => {
       <ContentContainer>
         {currentDevice === DESKTOP ? (
           <>
-            <LinkGroups />
+            <LinkGroups isAtTop={isAtTop} />
             <Divider />
             <SignInBtn />
           </>
