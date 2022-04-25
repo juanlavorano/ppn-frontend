@@ -14,18 +14,22 @@ const HeaderContainer = styled.h1`
 `;
 
 const HighlightedSpan = styled.span`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.white};
+`;
+
+const Line = styled.div`
+  color: ${(props) => props.theme.colors.secondary};
 `;
 
 export default function Header() {
   return (
     <HeaderContainer>
-      <div>
+      <Line>
         Go <HighlightedSpan>Private</HighlightedSpan>
-      </div>
-      <div>
+      </Line>
+      <Line>
         Get <HighlightedSpan>Private People Networks</HighlightedSpan>
-      </div>
+      </Line>
     </HeaderContainer>
   );
 }

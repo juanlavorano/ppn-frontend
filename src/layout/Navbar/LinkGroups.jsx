@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import useResponsiveness from "hooks/useResponsiveness";
 import { DESKTOP } from "constants/devices";
 import { NavLink } from "react-router-dom";
@@ -14,12 +14,14 @@ const LinkContainer = styled.div`
   }
   .nav-links {
     text-decoration: none;
-    color: ${(props) => props.theme.colors.black};
+    color: ${(props) =>
+      props.isAtTop ? props.theme.colors.black : props.theme.colors.white};
     transition: color 0.2s ease;
     &:hover {
       color: ${(props) => props.theme.colors.primary};
     }
   }
+  transition: color 0.4s ease;
 `;
 
 const InfoContainer = styled.div`
@@ -36,6 +38,9 @@ const InfoContainer = styled.div`
 
 const LinkGroups = () => {
   const { currentDevice } = useResponsiveness();
+  const offsetLimit = 40;
+  const [isAtTop, setIsAtTop] = useState(true);
+
   const routes = [
     {
       name: "Home",
@@ -47,11 +52,20 @@ const LinkGroups = () => {
     },
     {
       name: "Roadmap",
-      link: "/roadmap"
-    }
+      link: "/roadmap",
+    },
   ];
+
+  useEffect(() => {
+    window.onscroll = () => {
+      isAtTop === true && setIsAtTop(false);
+      window.pageYOffset <= offsetLimit && setIsAtTop(true);
+    };
+    return () => (window.onscroll = null);
+  });
+
   return (
-    <LinkContainer>
+    <LinkContainer isAtTop={isAtTop}>
       <>
         {routes.map((route) => (
           <NavLink

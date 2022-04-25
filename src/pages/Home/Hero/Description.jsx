@@ -1,25 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import useContract from "@hooks/useContract";
+import useAccounts from "@hooks/useAccounts";
 
 const DescriptionContainer = styled.div`
   flex: 1;
   margin: auto;
-  padding: 0 15rem;
+  padding: 1em 3em;
+  width: 50%;
+  border-radius: 30px;
+  background-color: ${(props) => props.theme.colors.white};
+  opacity: 0.8;
 `;
 
 const DescriptionText = styled.p`
   margin: 1.5em 0;
   font-weight: 600;
-  color: ${(props) => props.theme.colors.black};
 `;
 
 const Mint = styled.button`
   background: ${(props) => props.theme.colors.primary};
-  color: ${(props) => props.theme.colors.backgroundLight};
+  color: ${(props) => props.theme.colors.white};
   outline: none;
-  margin-left: 25%;
-  width: 50%;
+  margin-left: 15%;
+  width: 75%;
   border: none;
   user-select: none;
   cursor: pointer;
@@ -39,12 +43,11 @@ const Mint = styled.button`
 
 export default function Description() {
   const contract = useContract();
+  const { selectedAccount } = useAccounts();
 
   const handleMint = async () => {
     if (contract) {
       await contract.mint();
-
-
     }
   };
 
@@ -55,7 +58,9 @@ export default function Description() {
         these 10,000 PPNs has attributes that make them unique according to a
         defined rarity system.
       </DescriptionText>
-      <Mint onClick={handleMint}>Mint</Mint>
+      <Mint disabled={!selectedAccount} onClick={handleMint}>
+        {selectedAccount ? 'Mint' : 'Choose an account to MINT'}
+      </Mint>
     </DescriptionContainer>
   );
 }
