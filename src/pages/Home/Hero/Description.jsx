@@ -10,7 +10,7 @@ const DescriptionContainer = styled.div`
   width: 50%;
   border-radius: 30px;
   background-color: ${(props) => props.theme.colors.white};
-  opacity: 0.8;
+  opacity: 0.7;
 `;
 
 const DescriptionText = styled.p`
@@ -59,7 +59,7 @@ export default function Description() {
         defined rarity system.
       </DescriptionText>
       <Mint disabled={!selectedAccount} onClick={handleMint}>
-        {selectedAccount ? 'Mint' : 'Choose an account to MINT'}
+        {selectedAccount ? "Mint" : "Choose an account to MINT"}
       </Mint>
     </DescriptionContainer>
   );

@@ -11,6 +11,7 @@ const HeaderContainer = styled.h1`
   flex-direction: column;
   align-items: flex-start;
   padding: 2.5rem 8rem;
+  filter: brightness(80%);
 `;
 
 const HighlightedSpan = styled.span`

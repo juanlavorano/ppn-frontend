@@ -1,4 +1,4 @@
-import LoadingIcon from "components/LoadingIcon";
+import Logo from "components/Logo";
 import React from "react";
 import styled, { css } from "styled-components";
 
@@ -13,7 +13,7 @@ const LoadingContainer = styled.div`
 const Loading = ({ navbar }) => {
 	return (
 		<LoadingContainer navbar={navbar}>
-			<LoadingIcon size="20" />
+			<Logo size="20" />
 		</LoadingContainer>
 	);
 };
