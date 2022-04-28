@@ -46,4 +46,9 @@ export const routes = [
     layout: Layout,
     component: lazy(() => import("pages/Roadmap")),
   },
+  {
+    path: "/loading",
+    layout: Layout,
+    component: lazy(() => import("components/Loading")),
+  },
 ];
