@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Divider from "components/Divider";
+import Divider from "@components/Divider";
 import LinkGroups from "./LinkGroups";
 import MenuToggle from "./MenuToggle";
 import Navigation from "./Navigation";
 import SignInBtn from "./SignInBtn";
 import { useCycle } from "framer-motion";
 import styled from "styled-components";
-import useResponsiveness from "hooks/useResponsiveness";
-import { DESKTOP } from "constants/devices";
-import Logo from "components/Logo";
-import colors from "styles/colors";
+import useResponsiveness from "@hooks/useResponsiveness";
+import { DESKTOP } from "@constants/devices";
+import Logo from "@components/Logo";
+import colors from "@styles/colors";
 
 const Nav = styled.nav`
   position: sticky;

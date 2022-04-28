@@ -1,7 +1,7 @@
 import usePolkadotApi from "./useReefNetwork";
 import { getInjector } from "utils/connect";
 
-export default function useTransactions(account) {
+export function useTransactions(account) {
   const { api } = usePolkadotApi();
 
   const send = async (data) => {
@@ -63,3 +63,5 @@ export default function useTransactions(account) {
 
   return { send, signAndSend };
 }
+
+export default useTransactions;

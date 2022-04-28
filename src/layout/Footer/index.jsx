@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Copyright from "./Copyright";
 import Socials from "./Socials";
-import Divider from "components/Divider";
+import Divider from "@components/Divider";
 
 const FooterContainer = styled.div`
   display: flex;

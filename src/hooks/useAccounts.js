@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import AccountsContext from "contexts/AccountsContext/AccountsContext";
 
-export default function useAccounts() {
+export function useAccounts() {
   return useContext(AccountsContext);
 }
+
+export default useAccounts;

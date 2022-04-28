@@ -1,6 +1,5 @@
 import { Contract } from "ethers";
-import { PPN_ABI } from "constants/abi";
-import { PPN_ADDRESS } from "constants/address";
+import { PPN_ABI, PPN_ADDRESS } from "@constants";
 import useAccounts from "@hooks/useAccounts";
 import { useCallback, useEffect, useState } from "react";
 

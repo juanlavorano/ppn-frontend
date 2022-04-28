@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import useAccounts from "hooks/useAccounts";
-import useContract from "hooks/useContract";
+import useAccounts from "@hooks/useAccounts";
+import useContract from "@hooks/useContract";
 import styled from "styled-components";
 
 const RootContainer = styled.div`

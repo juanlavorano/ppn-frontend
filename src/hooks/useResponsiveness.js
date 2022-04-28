@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MOBILE, TABLET, DESKTOP } from "constants/devices";
+import { MOBILE, TABLET, DESKTOP } from "@constants/devices";
 
 function debounce(fn, ms) {
   let timer;
@@ -15,7 +15,7 @@ function debounce(fn, ms) {
   };
 }
 
-export default function useScreenSize() {
+export function useScreenSize() {
   const [currentDevice, setCurrentDevice] = useState();
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
@@ -54,3 +54,5 @@ export default function useScreenSize() {
 
   return { dimensions, breakpoints, currentDevice };
 }
+
+export default useScreenSize;

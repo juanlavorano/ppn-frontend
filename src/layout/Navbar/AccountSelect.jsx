@@ -3,9 +3,8 @@ import styled, { css, keyframes } from "styled-components";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import "simplebar/src/simplebar.css";
 import SimpleBar from "simplebar-react";
-import useEscape from "hooks/useEscape";
-import { truncateAddress } from "utils/formatters";
-import useAccounts from "hooks/useAccounts";
+import { useEscape, useAccounts } from "@hooks";
+import { truncateAddress } from "@utils/formatters";
 
 const StyledSimpleBar = styled(SimpleBar)`
   min-width: 12rem;

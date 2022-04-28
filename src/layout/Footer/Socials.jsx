@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Discord from "static/svg/Discord.svg";
-import Twitter from "static/svg/Twitter.svg";
+import Discord from "@static/svg/Discord.svg";
+import Twitter from "@static/svg/Twitter.svg";
 
 const SocialIcon = styled.img`
   width: 1.5rem;

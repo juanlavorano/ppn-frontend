@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PolkadotApiContext from "./ReefNetworkContext";
 import { WsProvider } from "@polkadot/api";
-import { REEF_WS_TESTNET } from "constants/networks";
+import { REEF_WS_TESTNET } from "@constants/networks";
 import { Provider } from "@reef-defi/evm-provider";
 
 export default function PolkadotApiProvider({ children }) {
