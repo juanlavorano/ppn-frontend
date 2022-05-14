@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "./Header";
 import Description from "./Description";
 import backgroundImage from "static/png/Background.png";
+import ToastContainer from "@components/ToastContainer";
 
 const Container = styled.div`
   background-image: url(${backgroundImage});
@@ -21,6 +22,7 @@ export default function Hero() {
     <Container>
       <Header />
       <Description />
+      <ToastContainer />
     </Container>
   );
 }

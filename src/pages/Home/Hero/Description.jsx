@@ -3,6 +3,8 @@ import styled from "styled-components";
 import useContract from "@hooks/useContract";
 import useAccounts from "@hooks/useAccounts";
 import useLayout from "@hooks/useLayout";
+import { toast } from "react-toastify";
+import { mint } from "@constants/notifications";
 
 const DescriptionContainer = styled.div`
   flex: 1;
@@ -48,9 +50,25 @@ export default function Description() {
   const { setIsSelectAccountOpen } = useLayout();
 
   const handleMint = async () => {
+    if (!contract) return;
     if (!selectedAccount) setIsSelectAccountOpen((prevState) => !prevState);
-    if (contract) {
+
+    try {
       await contract.mint();
+
+      toast.success(mint.success, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch {
+      toast.error(mint.error, {
+        position: "bottom-center",
+      });
     }
   };
 
