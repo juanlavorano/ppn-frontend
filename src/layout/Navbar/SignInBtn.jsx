@@ -4,6 +4,7 @@ import AccountSelect from "./AccountSelect";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { BtnBaseAnimated } from "components/Buttons";
 import useAccounts from "hooks/useAccounts";
+import useLayout from "@hooks/useLayout";
 
 const Btn = styled(BtnBaseAnimated)`
   display: flex;
@@ -27,11 +28,11 @@ const AnimBtn = ({ children, onClick }) => (
 );
 
 const SignInBtn = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { setIsSelectAccountOpen } = useLayout();
   const { selectedAccount } = useAccounts();
 
-  const handleOpen = () => setIsOpen((prevState) => !prevState);
-  
+  const handleOpen = () => setIsSelectAccountOpen((prevState) => !prevState);
+
   const buttonText = useCallback(() => {
     if (selectedAccount) {
       return selectedAccount.meta.name;
@@ -43,7 +44,7 @@ const SignInBtn = () => {
   return (
     <LazyMotion features={domAnimation}>
       <AnimBtn onClick={handleOpen}>{buttonText()}</AnimBtn>
-      <AccountSelect isActive={isOpen} setIsActive={setIsOpen} />
+      <AccountSelect />
     </LazyMotion>
   );
 };

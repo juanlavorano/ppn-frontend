@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import useContract from "@hooks/useContract";
 import useAccounts from "@hooks/useAccounts";
+import useLayout from "@hooks/useLayout";
 
 const DescriptionContainer = styled.div`
   flex: 1;
@@ -44,8 +45,10 @@ const Mint = styled.button`
 export default function Description() {
   const contract = useContract();
   const { selectedAccount } = useAccounts();
+  const { setIsSelectAccountOpen } = useLayout();
 
   const handleMint = async () => {
+    if (!selectedAccount) setIsSelectAccountOpen((prevState) => !prevState);
     if (contract) {
       await contract.mint();
     }
@@ -58,7 +61,7 @@ export default function Description() {
         these 10,000 PPNs has attributes that make them unique according to a
         defined rarity system.
       </DescriptionText>
-      <Mint disabled={!selectedAccount} onClick={handleMint}>
+      <Mint onClick={handleMint}>
         {selectedAccount ? "Mint" : "Choose an account to MINT"}
       </Mint>
     </DescriptionContainer>

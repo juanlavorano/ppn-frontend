@@ -91,40 +91,13 @@ export default function MyCollection() {
     retrieveNFTs();
   }, [retrieveNFTs]);
 
-  const testTokens = [
-    {
-      url: "https://gateway.pinata.cloud/ipfs/QmcocpLf7iCVQJ5BsugcLpyamD8d2Rx6WbcTmktAUVa7eX/1.png",
-      id: 1,
-    },
-    {
-      url: "https://gateway.pinata.cloud/ipfs/QmcocpLf7iCVQJ5BsugcLpyamD8d2Rx6WbcTmktAUVa7eX/2.png",
-      id: 2,
-    },
-    {
-      url: "https://gateway.pinata.cloud/ipfs/QmcocpLf7iCVQJ5BsugcLpyamD8d2Rx6WbcTmktAUVa7eX/3.png",
-      id: 3,
-    },
-    {
-      url: "https://gateway.pinata.cloud/ipfs/QmcocpLf7iCVQJ5BsugcLpyamD8d2Rx6WbcTmktAUVa7eX/4.png",
-      id: 4,
-    },
-    {
-      url: "https://gateway.pinata.cloud/ipfs/QmcocpLf7iCVQJ5BsugcLpyamD8d2Rx6WbcTmktAUVa7eX/5.png",
-      id: 5,
-    },
-    {
-      url: "https://gateway.pinata.cloud/ipfs/QmcocpLf7iCVQJ5BsugcLpyamD8d2Rx6WbcTmktAUVa7eX/6.png",
-      id: 6,
-    },
-  ];
-
   return (
     <RootContainer>
       {loading && <p>Loading</p>}
       {error && <p>{error.message}</p>}
 
       {!!myNFTs.length &&
-        testTokens.map((nft) => (
+        myNFTs.map((nft) => (
           <ImgContainer>
             <Img src={nft.url} alt={`nft-${nft.id}`} />
             <ImgName>#{nft.id}</ImgName>

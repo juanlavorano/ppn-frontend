@@ -5,6 +5,7 @@ import "simplebar/src/simplebar.css";
 import SimpleBar from "simplebar-react";
 import { useEscape, useAccounts } from "@hooks";
 import { truncateAddress } from "@utils/formatters";
+import useLayout from "@hooks/useLayout";
 
 const StyledSimpleBar = styled(SimpleBar)`
   min-width: 12rem;
@@ -219,8 +220,9 @@ const elemContains = (rect, x, y) => {
     : false;
 };
 
-const AccountSelect = ({ isActive, setIsActive }) => {
-  const [elemIsVisible, setElemIsVisible] = useState(isActive);
+const AccountSelect = () => {
+  const { isSelectAccountOpen, setIsSelectAccountOpen } = useLayout();
+  const [elemIsVisible, setElemIsVisible] = useState(isSelectAccountOpen);
   const { accounts, selectAccount } = useAccounts();
 
   const initialClaimButtonText = "I Accept";
@@ -229,9 +231,11 @@ const AccountSelect = ({ isActive, setIsActive }) => {
   );
 
   const [alert, setAlert] = useState({
-    isActive: false,
+    isSelectAccountOpen: false,
   });
-  const [alertIsVisible, setAlertIsVisible] = useState(alert.isActive);
+  const [alertIsVisible, setAlertIsVisible] = useState(
+    alert.isSelectAccountOpen
+  );
   const modalRef = useRef();
   const alertRef = useRef();
 
@@ -240,39 +244,39 @@ const AccountSelect = ({ isActive, setIsActive }) => {
       (acc) => acc.address === account.address
     );
     await selectAccount(matchedAccount);
-    setIsActive(false);
+    setIsSelectAccountOpen(false);
   };
 
   useEffect(() => {
-    if (isActive === false) {
+    if (isSelectAccountOpen === false) {
       setTimeout(() => {
-        setElemIsVisible(isActive);
+        setElemIsVisible(isSelectAccountOpen);
       }, 200);
     } else {
-      setElemIsVisible(isActive);
+      setElemIsVisible(isSelectAccountOpen);
     }
-  }, [isActive]);
+  }, [isSelectAccountOpen]);
 
   useEffect(() => {
-    if (alert.isActive === false) {
+    if (alert.isSelectAccountOpen === false) {
       setTimeout(() => {
-        setAlertIsVisible(alert.isActive);
+        setAlertIsVisible(alert.isSelectAccountOpen);
       }, 200);
     } else {
-      setAlertIsVisible(alert.isActive);
+      setAlertIsVisible(alert.isSelectAccountOpen);
     }
-  }, [alert.isActive]);
+  }, [alert.isSelectAccountOpen]);
 
   const closeModal = () => {
     setAlert({
       ...alert,
-      isActive: false,
+      isSelectAccountOpen: false,
     });
-    setIsActive(false);
+    setIsSelectAccountOpen(false);
   };
 
   useLayoutEffect(() => {
-    setIsActive(false);
+    setIsSelectAccountOpen(false);
     //eslint-disable-next-line
   }, []);
 
@@ -295,11 +299,11 @@ const AccountSelect = ({ isActive, setIsActive }) => {
     <LazyMotion features={domAnimation}>
       {elemIsVisible && (
         <BackDrop
-          remove={!isActive}
+          remove={!isSelectAccountOpen}
           onMouseDown={handleClickOutside}
           onTouchStart={handleClickOutside}
         >
-          <Modal remove={!isActive} ref={modalRef}>
+          <Modal remove={!isSelectAccountOpen} ref={modalRef}>
             <Title>Choose an account</Title>
             <StyledSimpleBar style={{ maxHeight: 300 }}>
               {accounts?.length ? (
@@ -334,7 +338,7 @@ const AccountSelect = ({ isActive, setIsActive }) => {
             </StyledSimpleBar>
           </Modal>
           {alertIsVisible && (
-            <Alert remove={!alert.isActive} ref={alertRef}>
+            <Alert remove={!alert.isSelectAccountOpen} ref={alertRef}>
               <Title>Claim EVM Account</Title>
               <Content>
                 EVM account not claimed.
