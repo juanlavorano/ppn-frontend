@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useContract from "@hooks/useContract";
 import useAccounts from "@hooks/useAccounts";
@@ -48,13 +48,17 @@ export default function Description() {
   const contract = useContract();
   const { selectedAccount } = useAccounts();
   const { setIsSelectAccountOpen } = useLayout();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleMint = async () => {
-    if (!contract) return;
-    if (!selectedAccount) setIsSelectAccountOpen((prevState) => !prevState);
+    if (!selectedAccount)
+      return setIsSelectAccountOpen((prevState) => !prevState);
 
     try {
-      await contract.mint();
+      if (contract) {
+        setIsProcessing(true);
+        await contract.mint();
+      }
 
       toast.success(mint.success, {
         position: "bottom-center",
@@ -65,10 +69,12 @@ export default function Description() {
         draggable: true,
         progress: undefined,
       });
+      setIsProcessing(false);
     } catch {
       toast.error(mint.error, {
         position: "bottom-center",
       });
+      setIsProcessing(false);
     }
   };
 
@@ -79,7 +85,7 @@ export default function Description() {
         these 10,000 PPNs has attributes that make them unique according to a
         defined rarity system.
       </DescriptionText>
-      <Mint onClick={handleMint}>
+      <Mint onClick={handleMint} disabled={isProcessing}>
         {selectedAccount ? "Mint" : "Choose an account to MINT"}
       </Mint>
     </DescriptionContainer>
