@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow-y: hidden;
+  overflow-x: hidden;
 `;
 
 export default function Hero() {
