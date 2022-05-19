@@ -4,6 +4,13 @@ import styled from "styled-components";
 import useContract from "@hooks/useContract";
 import { PPN_ADDRESS } from "@constants/address";
 import useAccounts from "@hooks/useAccounts";
+import { toast } from "react-toastify";
+import { allowance } from "@constants/notifications";
+
+const ModalContainer = styled(Modal)`
+  position: relative;
+  top: 200%;
+`;
 
 const Button = styled.button`
   color: ${(props) => props.theme.colors.white};
@@ -56,8 +63,29 @@ export default function AllowanceModal({ isOpen, setIsOpen }) {
       setIsOpen(false);
 
       const evmAddress = await signer.queryEvmAddress();
-      await approveContract(evmAddress);
+      const approve = await approveContract(evmAddress);
+
+      if (approve) {
+        toast.success(allowance.success, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch {
+      toast.error(allowance.error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       disconnectAccount();
     }
   };
@@ -68,15 +96,20 @@ export default function AllowanceModal({ isOpen, setIsOpen }) {
   };
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Allowance needed">
+    <ModalContainer
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      onClose={handleCancel}
+      title="Allowance needed"
+    >
       <div>
-        Allowance provided to PPN is needed to continue with the transaction. Do
-        you want to proceed?
+        Allowance provided to PPN is needed to preform transactions. Do you want
+        to proceed?
       </div>
       <ButtonsContainer>
         <CancelButton onClick={handleCancel}>Cancel</CancelButton>
         <AcceptButton onClick={handleAccept}>Accept</AcceptButton>
       </ButtonsContainer>
-    </Modal>
+    </ModalContainer>
   );
 }

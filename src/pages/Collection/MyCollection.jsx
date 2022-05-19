@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import useAccounts from "@hooks/useAccounts";
 import useContract from "@hooks/useContract";
 import styled from "styled-components";
+import AlertSign from "./AlertSign";
 
 const RootContainer = styled.div`
   display: grid;
@@ -27,7 +29,8 @@ const ImgName = styled.h6`
 
 export default function MyCollection() {
   const { signer } = useAccounts();
-  const {ppnContract} = useContract();
+  const navigate = useNavigate();
+  const { ppnContract } = useContract();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
@@ -42,6 +45,10 @@ export default function MyCollection() {
     },
     [ppnContract]
   );
+
+  const handleNavigateHome = () => {
+    navigate("/")
+  };
 
   const getTokensIndexByAddress = useCallback(async () => {
     if (!signer || !ppnContract) return;
@@ -93,8 +100,14 @@ export default function MyCollection() {
 
   return (
     <RootContainer>
-      {loading && <p>Loading</p>}
+      {loading && <AlertSign>Loading...</AlertSign>}
       {error && <p>{error.message}</p>}
+      {!myNFTs.length && !loading && (
+        <AlertSign onClick={handleNavigateHome}>
+          You don't have any NFTs yet. Click here to go to the home page and
+          mint!
+        </AlertSign>
+      )}
 
       {!!myNFTs.length &&
         myNFTs.map((nft) => (

@@ -42,11 +42,12 @@ const ModalContent = styled.div`
   text-align: center;
 `;
 
-export default function Modal({ children, title, isOpen, setIsOpen }) {
+export default function Modal({ children, title, isOpen, setIsOpen, onClose }) {
   const modalRef = useRef();
 
   const closeModal = () => {
     setIsOpen(false);
+    if (onClose) onClose();
   };
 
   const elemContains = (rect, x, y) => {

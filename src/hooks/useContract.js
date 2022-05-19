@@ -4,6 +4,8 @@ import { REEF_ERC20_ABI, PPN_ABI } from "@constants/abi";
 import useAccounts from "@hooks/useAccounts";
 import { useCallback, useEffect, useState } from "react";
 import { ethers } from "ethers";
+import { MIN_APPROVE_REEF } from "@constants/app";
+import { toast } from "react-toastify";
 
 export default function useContract() {
   const { signer } = useAccounts();
@@ -37,6 +39,20 @@ export default function useContract() {
     [reefERC20Contract]
   );
 
+  const mint = async () => {
+    // Get evm addres from signer
+    const evmAddress = await signer.queryEvmAddress();
+
+    // Check signer's allowance
+    const allowance = await getAddressAllowance(evmAddress);
+
+    if (allowance < MIN_APPROVE_REEF) return;
+
+    if (ppnContract) {
+      await ppnContract.mint();
+    }
+  };
+
   useEffect(() => {
     setPPNContract(instantiateContract(PPN_ADDRESS, PPN_ABI));
     setReefERC20Contract(
@@ -44,5 +60,5 @@ export default function useContract() {
     );
   }, [instantiateContract]);
 
-  return { ppnContract, reefERC20Contract, getAddressAllowance };
+  return { ppnContract, reefERC20Contract, getAddressAllowance, mint };
 }
