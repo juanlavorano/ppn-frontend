@@ -27,24 +27,24 @@ const ImgName = styled.h6`
 
 export default function MyCollection() {
   const { signer } = useAccounts();
-  const contract = useContract();
+  const {ppnContract} = useContract();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
 
   const getAccountBalance = useCallback(
     async (signerAddress) => {
-      if (!contract) return;
+      if (!ppnContract) return;
 
-      const balanceInBigNumber = await contract.balanceOf(signerAddress);
+      const balanceInBigNumber = await ppnContract.balanceOf(signerAddress);
 
       return balanceInBigNumber.toNumber();
     },
-    [contract]
+    [ppnContract]
   );
 
   const getTokensIndexByAddress = useCallback(async () => {
-    if (!signer || !contract) return;
+    if (!signer || !ppnContract) return;
 
     // Get EVM address
     const signerAddress = await signer.getAddress();
@@ -57,22 +57,22 @@ export default function MyCollection() {
 
     // Get tokens indexes
     for (let t = 0; t < accountBalance; t++) {
-      const token = await contract.tokenOfOwnerByIndex(signerAddress, t);
+      const token = await ppnContract.tokenOfOwnerByIndex(signerAddress, t);
       tokens.push(token.toNumber());
     }
 
     return tokens;
-  }, [contract, getAccountBalance, signer]);
+  }, [ppnContract, getAccountBalance, signer]);
 
   const retrieveNFTs = useCallback(async () => {
-    if (!contract) return;
+    if (!ppnContract) return;
 
     setLoading(true);
 
     const tokensIds = await getTokensIndexByAddress();
     if (!tokensIds) return setError({ message: "You have no tokens" });
 
-    const contractURI = await contract.baseURI();
+    const contractURI = await ppnContract.baseURI();
 
     let myNFTs = [];
 
@@ -85,7 +85,7 @@ export default function MyCollection() {
 
     setMyNFTs(myNFTs);
     setLoading(false);
-  }, [contract, getTokensIndexByAddress]);
+  }, [ppnContract, getTokensIndexByAddress]);
 
   useEffect(() => {
     retrieveNFTs();

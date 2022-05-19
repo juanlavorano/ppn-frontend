@@ -1,4 +1,10 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import styled, { css, keyframes } from "styled-components";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import "simplebar/src/simplebar.css";
@@ -6,6 +12,9 @@ import SimpleBar from "simplebar-react";
 import { useEscape, useAccounts } from "@hooks";
 import { truncateAddress } from "@utils/formatters";
 import useLayout from "@hooks/useLayout";
+import useContract from "@hooks/useContract";
+import { MIN_APPROVE_REEF } from "@constants/app";
+import AllowanceModal from "./AllowanceModal";
 
 const StyledSimpleBar = styled(SimpleBar)`
   min-width: 12rem;
@@ -222,10 +231,11 @@ const elemContains = (rect, x, y) => {
 
 const AccountSelect = () => {
   const { isSelectAccountOpen, setIsSelectAccountOpen } = useLayout();
+  const { getAddressAllowance } = useContract();
   const [elemIsVisible, setElemIsVisible] = useState(isSelectAccountOpen);
-  const { accounts, selectAccount } = useAccounts();
-
+  const { accounts, selectAccount, signer } = useAccounts();
   const initialClaimButtonText = "I Accept";
+  const [isAllowanceModalOpen, setIsAllowanceModalOpen] = useState(false);
   const [claimButtonText, setClaimButtonText] = useState(
     initialClaimButtonText
   );
@@ -243,10 +253,33 @@ const AccountSelect = () => {
     const matchedAccount = accounts.find(
       (acc) => acc.address === account.address
     );
+
     await selectAccount(matchedAccount);
+
     setIsSelectAccountOpen(false);
   };
 
+  const handleCheckAllowance = useCallback(async () => {
+    if (signer) {
+      // Get evm addres from signer
+      const evmAddress = await signer.queryEvmAddress();
+
+      // Check signer's allowance
+      const allowance = await getAddressAllowance(evmAddress);
+
+      // If allowance is not enough for one NFT, prompt mesasge to ask for it
+      if (allowance < MIN_APPROVE_REEF) {
+        setIsAllowanceModalOpen(true);
+      }
+    }
+  }, [getAddressAllowance, setIsAllowanceModalOpen, signer]);
+
+  // Check account allowance effect
+  useEffect(() => {
+    handleCheckAllowance();
+  }, [handleCheckAllowance]);
+
+  // Toggle select account menu effect
   useEffect(() => {
     if (isSelectAccountOpen === false) {
       setTimeout(() => {
@@ -296,74 +329,81 @@ const AccountSelect = () => {
   });
 
   return (
-    <LazyMotion features={domAnimation}>
-      {elemIsVisible && (
-        <BackDrop
-          remove={!isSelectAccountOpen}
-          onMouseDown={handleClickOutside}
-          onTouchStart={handleClickOutside}
-        >
-          <Modal remove={!isSelectAccountOpen} ref={modalRef}>
-            <Title>Choose an account</Title>
-            <StyledSimpleBar style={{ maxHeight: 300 }}>
-              {accounts?.length ? (
-                <>
-                  {accounts
-                    ? accounts.map((account, index) => {
-                        return (
-                          <m.p
-                            onClick={() => handleAccountChange(account)}
-                            className="account-name"
-                            whileHover={{
-                              y: -2.5,
-                              x: 0,
-                            }}
-                            whileTap={{
-                              scale: 0.99,
-                            }}
-                            key={index}
-                          >
-                            {account.meta.name}
-                            <label title={account.address}>
-                              {truncateAddress(account.address)}
-                            </label>
-                          </m.p>
-                        );
-                      })
-                    : null}
-                </>
-              ) : (
-                "Please connect your wallet"
-              )}
-            </StyledSimpleBar>
-          </Modal>
-          {alertIsVisible && (
-            <Alert remove={!alert.isSelectAccountOpen} ref={alertRef}>
-              <Title>Claim EVM Account</Title>
-              <Content>
-                EVM account not claimed.
-                <br />
-                Please claim it and try logging in again.
-                <br />
-                You will need some Reef in order to pay for the transaction.
-              </Content>
-              <Button
-                whileHover={{
-                  y: -5,
-                  x: 0,
-                  scale: 1.01,
-                }}
-                whileTap={{
-                  scale: 0.99,
-                }}
-              >
-                {claimButtonText}
-              </Button>
-            </Alert>
-          )}
-        </BackDrop>
-      )}
-    </LazyMotion>
+    <>
+      <AllowanceModal
+        setIsOpen={setIsAllowanceModalOpen}
+        isOpen={isAllowanceModalOpen}
+      />
+
+      <LazyMotion features={domAnimation}>
+        {elemIsVisible && (
+          <BackDrop
+            remove={!isSelectAccountOpen}
+            onMouseDown={handleClickOutside}
+            onTouchStart={handleClickOutside}
+          >
+            <Modal remove={!isSelectAccountOpen} ref={modalRef}>
+              <Title>Choose an account</Title>
+              <StyledSimpleBar style={{ maxHeight: 300 }}>
+                {accounts?.length ? (
+                  <>
+                    {accounts
+                      ? accounts.map((account, index) => {
+                          return (
+                            <m.p
+                              onClick={() => handleAccountChange(account)}
+                              className="account-name"
+                              whileHover={{
+                                y: -2.5,
+                                x: 0,
+                              }}
+                              whileTap={{
+                                scale: 0.99,
+                              }}
+                              key={index}
+                            >
+                              {account.meta.name}
+                              <label title={account.address}>
+                                {truncateAddress(account.address)}
+                              </label>
+                            </m.p>
+                          );
+                        })
+                      : null}
+                  </>
+                ) : (
+                  "Please connect your wallet"
+                )}
+              </StyledSimpleBar>
+            </Modal>
+            {alertIsVisible && (
+              <Alert remove={!alert.isSelectAccountOpen} ref={alertRef}>
+                <Title>Claim EVM Account</Title>
+                <Content>
+                  EVM account not claimed.
+                  <br />
+                  Please claim it and try logging in again.
+                  <br />
+                  You will need some Reef in order to pay for the transaction.
+                </Content>
+                <Button
+                  whileHover={{
+                    y: -5,
+                    x: 0,
+                    scale: 1.01,
+                  }}
+                  whileTap={{
+                    scale: 0.99,
+                  }}
+                >
+                  {claimButtonText}
+                </Button>
+              </Alert>
+            )}
+          </BackDrop>
+        )}
+      </LazyMotion>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import useAccounts from "@hooks/useAccounts";
 import useLayout from "@hooks/useLayout";
 import { toast } from "react-toastify";
 import { mint } from "@constants/notifications";
+import { MIN_APPROVE_REEF } from "@constants/app";
 
 const DescriptionContainer = styled.div`
   flex: 1;
@@ -45,8 +46,8 @@ const Mint = styled.button`
 `;
 
 export default function Description() {
-  const contract = useContract();
-  const { selectedAccount } = useAccounts();
+  const { ppnContract, getAddressAllowance } = useContract();
+  const { selectedAccount, signer } = useAccounts();
   const { setIsSelectAccountOpen } = useLayout();
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -55,9 +56,17 @@ export default function Description() {
       return setIsSelectAccountOpen((prevState) => !prevState);
 
     try {
-      if (contract) {
+      // Get evm addres from signer
+      const evmAddress = await signer.queryEvmAddress();
+
+      // Check signer's allowance
+      const allowance = await getAddressAllowance(evmAddress);
+
+      if (allowance < MIN_APPROVE_REEF) return;
+
+      if (ppnContract) {
         setIsProcessing(true);
-        await contract.mint();
+        await ppnContract.mint();
       }
 
       toast.success(mint.success, {

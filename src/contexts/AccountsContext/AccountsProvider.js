@@ -48,6 +48,15 @@ export default function AccountsProvider({ children }) {
     }
   }, [provider]);
 
+  const disconnectAccount = useCallback(async () => {
+    // Set states
+    setSelectedAccount(null);
+    setSigner(null);
+
+    // Save account in storage with expiry date
+    window.localStorage.removeItem(SELECTED_ACCOUNT);
+  }, []);
+
   const selectAccount = useCallback(
     async (account) => {
       await provider.api.isReady;
@@ -66,21 +75,27 @@ export default function AccountsProvider({ children }) {
           await signer.getAddress()
         );
         await signer.claimDefaultAccount();
-      } else {
-        // Set states
-        setSelectedAccount(account);
-        setSigner(signer);
 
-        // Save account in storage with expiry date
-        const storageExpiry = new Date(new Date().getTime() + EXPIRY_TIME);
-        window.localStorage.setItem(
-          SELECTED_ACCOUNT,
-          JSON.stringify({
-            account,
-            expiry: storageExpiry,
-          })
-        );
+        return;
       }
+
+      // Set states
+      setSelectedAccount(account);
+      setSigner(signer);
+
+      // Save account in storage with expiry date
+
+      if (localStorage.getItem(SELECTED_ACCOUNT))
+        localStorage.removeItem(SELECTED_ACCOUNT);
+
+      const storageExpiry = new Date(new Date().getTime() + EXPIRY_TIME);
+      window.localStorage.setItem(
+        SELECTED_ACCOUNT,
+        JSON.stringify({
+          account,
+          expiry: storageExpiry,
+        })
+      );
     },
     [provider]
   );
@@ -97,6 +112,7 @@ export default function AccountsProvider({ children }) {
         accounts,
         selectedAccount,
         selectAccount,
+        disconnectAccount,
         signer,
       }}
     >
