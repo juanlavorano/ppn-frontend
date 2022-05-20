@@ -79,9 +79,10 @@ export default function Description() {
   return (
     <DescriptionContainer>
       <DescriptionText>
-        <strong>PPN</strong> is an NFT project on the Reef blockchain. Each of
+      <strong>PPN</strong> is an NFT project on the Reef blockchain. Each of
         these 10,000 PPNs has attributes that make them unique according to a
         defined rarity system.
+        Minting price = 14.000 <strong>Reef</strong> 
       </DescriptionText>
       <Mint onClick={handleMint} disabled={isProcessing}>
         {selectedAccount ? "Mint" : "Choose an account to MINT"}

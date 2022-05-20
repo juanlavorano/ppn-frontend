@@ -103,8 +103,8 @@ export default function AllowanceModal({ isOpen, setIsOpen }) {
       title="Allowance needed"
     >
       <div>
-        Allowance provided to PPN is needed to preform transactions. Do you want
-        to proceed?
+        You need to provide allowance to PPN in order to mint.
+        Do you want to proceed?
       </div>
       <ButtonsContainer>
         <CancelButton onClick={handleCancel}>Cancel</CancelButton>

@@ -1,5 +1,5 @@
 export const mint = {
-  success: "Successfully minted! Checkout the Collection page",
+  success: "Successfully minted! Check out the Collection page",
   error: "Oops! Something went wrong. Try again later",
 };
 
