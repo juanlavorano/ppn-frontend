@@ -1,5 +1,9 @@
 export let PPN_ABI = [
-  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  {
+    inputs: [{ internalType: "address", name: "_reef", type: "address" }],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
   {
     anonymous: false,
     inputs: [
@@ -52,7 +56,7 @@ export let PPN_ABI = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "punkIndex",
+        name: "ppnIndex",
         type: "uint256",
       },
     ],
@@ -84,7 +88,7 @@ export let PPN_ABI = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "punkIndex",
+        name: "ppnIndex",
         type: "uint256",
       },
       {
@@ -100,7 +104,7 @@ export let PPN_ABI = [
         type: "address",
       },
     ],
-    name: "PunkBidEntered",
+    name: "PpnBidEntered",
     type: "event",
   },
   {
@@ -109,7 +113,7 @@ export let PPN_ABI = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "punkIndex",
+        name: "ppnIndex",
         type: "uint256",
       },
       {
@@ -125,7 +129,7 @@ export let PPN_ABI = [
         type: "address",
       },
     ],
-    name: "PunkBidWithdrawn",
+    name: "PpnBidWithdrawn",
     type: "event",
   },
   {
@@ -134,7 +138,7 @@ export let PPN_ABI = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "punkIndex",
+        name: "ppnIndex",
         type: "uint256",
       },
       {
@@ -156,7 +160,7 @@ export let PPN_ABI = [
         type: "address",
       },
     ],
-    name: "PunkBought",
+    name: "PpnBought",
     type: "event",
   },
   {
@@ -165,11 +169,11 @@ export let PPN_ABI = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "punkIndex",
+        name: "ppnIndex",
         type: "uint256",
       },
     ],
-    name: "PunkNoLongerForSale",
+    name: "PpnNoLongerForSale",
     type: "event",
   },
   {
@@ -178,7 +182,7 @@ export let PPN_ABI = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "punkIndex",
+        name: "ppnIndex",
         type: "uint256",
       },
       {
@@ -194,7 +198,7 @@ export let PPN_ABI = [
         type: "address",
       },
     ],
-    name: "PunkOffered",
+    name: "PpnOffered",
     type: "event",
   },
   {
@@ -205,11 +209,11 @@ export let PPN_ABI = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "punkIndex",
+        name: "ppnIndex",
         type: "uint256",
       },
     ],
-    name: "PunkTransfer",
+    name: "PpnTransfer",
     type: "event",
   },
   {
@@ -232,7 +236,7 @@ export let PPN_ABI = [
       { internalType: "uint256", name: "tokenId", type: "uint256" },
       { internalType: "uint256", name: "minPrice", type: "uint256" },
     ],
-    name: "acceptBidForPunk",
+    name: "acceptBidForPpn",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -263,7 +267,7 @@ export let PPN_ABI = [
   },
   {
     inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-    name: "buyPunk",
+    name: "buyPpn",
     outputs: [],
     stateMutability: "payable",
     type: "function",
@@ -277,7 +281,7 @@ export let PPN_ABI = [
   },
   {
     inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-    name: "enterBidForPunk",
+    name: "enterBidForPpn",
     outputs: [],
     stateMutability: "payable",
     type: "function",
@@ -325,7 +329,7 @@ export let PPN_ABI = [
       { internalType: "uint256", name: "tokenId", type: "uint256" },
       { internalType: "uint256", name: "minSalePriceInWei", type: "uint256" },
     ],
-    name: "offerPunkForSale",
+    name: "offerPpnForSale",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -336,7 +340,7 @@ export let PPN_ABI = [
       { internalType: "uint256", name: "minSalePriceInWei", type: "uint256" },
       { internalType: "address", name: "toAddress", type: "address" },
     ],
-    name: "offerPunkForSaleToAddress",
+    name: "offerPpnForSaleToAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -364,10 +368,10 @@ export let PPN_ABI = [
   },
   {
     inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "punkBids",
+    name: "ppnBids",
     outputs: [
       { internalType: "bool", name: "hasBid", type: "bool" },
-      { internalType: "uint256", name: "punkIndex", type: "uint256" },
+      { internalType: "uint256", name: "ppnIndex", type: "uint256" },
       { internalType: "address", name: "bidder", type: "address" },
       { internalType: "uint256", name: "value", type: "uint256" },
     ],
@@ -376,17 +380,17 @@ export let PPN_ABI = [
   },
   {
     inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-    name: "punkNoLongerForSale",
+    name: "ppnNoLongerForSale",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "punksOfferedForSale",
+    name: "ppnsOfferedForSale",
     outputs: [
       { internalType: "bool", name: "isForSale", type: "bool" },
-      { internalType: "uint256", name: "punkIndex", type: "uint256" },
+      { internalType: "uint256", name: "ppnIndex", type: "uint256" },
       { internalType: "address", name: "seller", type: "address" },
       { internalType: "uint256", name: "minValue", type: "uint256" },
       { internalType: "address", name: "onlySellTo", type: "address" },
@@ -396,8 +400,15 @@ export let PPN_ABI = [
   },
   {
     inputs: [],
-    name: "punksRemainingToAssign",
+    name: "ppnsRemainingToAssign",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "reef",
+    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -516,26 +527,29 @@ export let PPN_ABI = [
       { internalType: "address", name: "to", type: "address" },
       { internalType: "uint256", name: "tokenId", type: "uint256" },
     ],
-    name: "transferPunk",
+    name: "transferPpn",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [],
+    inputs: [
+      { internalType: "address", name: "_fro", type: "address" },
+      { internalType: "address", name: "_tto", type: "address" },
+      { internalType: "uint256", name: "_ammnt", type: "uint256" },
+    ],
     name: "withdraw",
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "payable",
     type: "function",
   },
   {
     inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-    name: "withdrawBidForPunk",
+    name: "withdrawBidForPpn",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
-  { stateMutability: "payable", type: "receive" },
 ];
 
 export let REEF_ERC20_ABI = [

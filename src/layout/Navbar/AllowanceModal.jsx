@@ -6,6 +6,7 @@ import { PPN_ADDRESS } from "@constants/address";
 import useAccounts from "@hooks/useAccounts";
 import { toast } from "react-toastify";
 import { allowance } from "@constants/notifications";
+import { ALLOWANCE_AMOUNT } from "@constants/app";
 
 const ModalContainer = styled(Modal)`
   position: relative;
@@ -48,10 +49,10 @@ export default function AllowanceModal({ isOpen, setIsOpen }) {
 
   const approveContract = async () => {
     if (reefERC20Contract) {
-      // Send contract approval for 100M reef, so that allowance shouldn't be asked for again
+      // Send contract approval for 100000000000000000000000000 wei, so that allowance shouldn't be asked for again
       const response = await reefERC20Contract.approve(
         PPN_ADDRESS,
-        100000000000000000000000000n
+        ALLOWANCE_AMOUNT
       );
 
       return response;
