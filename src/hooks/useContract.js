@@ -5,7 +5,6 @@ import useAccounts from "@hooks/useAccounts";
 import { useCallback, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { MIN_APPROVE_REEF } from "@constants/app";
-import { toast } from "react-toastify";
 
 export default function useContract() {
   const { signer } = useAccounts();

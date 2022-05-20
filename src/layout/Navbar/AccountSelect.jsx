@@ -236,6 +236,7 @@ const AccountSelect = () => {
   const { accounts, selectAccount, signer } = useAccounts();
   const initialClaimButtonText = "I Accept";
   const [isAllowanceModalOpen, setIsAllowanceModalOpen] = useState(false);
+  // eslint-disable-next-line
   const [claimButtonText, setClaimButtonText] = useState(
     initialClaimButtonText
   );
