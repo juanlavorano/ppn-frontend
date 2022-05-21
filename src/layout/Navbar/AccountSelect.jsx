@@ -49,42 +49,12 @@ const swipeLeftToRight = keyframes`
 	}
 `;
 
-const swipeDownwards = keyframes`
-	0% {
-		transform: translate(-50%,-100px);
-		opacity: 0;
-	}
-	100% {
-		transform: translate(-50%,0);
-		opacity: 1;
-	}
-`;
-
-const swipeUpwards = keyframes`
-	0% {
-		transform: translate(-50%,0);
-		opacity: 1;
-	}
-	100% {
-		transform: translate(-50%,-100px);
-		opacity: 0;
-	}
-`;
-
 const modalEntryAnim = css`
   animation: ${swipeRightToLeft} 0.2s cubic-bezier(0.83, 0, 0.17, 1) forwards;
 `;
 
 const modalExitAnim = css`
   animation: ${swipeLeftToRight} 0.2s cubic-bezier(0.83, 0, 0.17, 1) forwards;
-`;
-
-const alertEntryAnim = css`
-  animation: ${swipeDownwards} 0.2s cubic-bezier(0.83, 0, 0.17, 1) forwards;
-`;
-
-const alertExitAnim = css`
-  animation: ${swipeUpwards} 0.2s cubic-bezier(0.83, 0, 0.17, 1) forwards;
 `;
 
 const BackDrop = styled.div`
@@ -168,58 +138,6 @@ const Title = styled.h1`
   color: hsl(240, 6%, 75%);
 `;
 
-const networkButtonStyles = css`
-  --app-theme-opacity: 0.25;
-  --app-theme-text: rgb(211 231 255);
-  border: solid 0.15rem rgb(13, 104, 216);
-  background: rgba(13, 104, 216, 0.5);
-  color: rgb(211 231 255);
-`;
-
-const Button = styled(m.a)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-family);
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 0.675rem 1.25rem;
-  border-radius: 0.5rem;
-  background: hsl(236, 10%, 23%);
-  outline: none;
-  border: none;
-  cursor: pointer;
-  z-index: 2;
-  user-select: none;
-  ${(props) => props.network && networkButtonStyles};
-`;
-
-const Alert = styled.div`
-  position: absolute;
-  margin-top: 7rem;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 24rem;
-  margin-right: 0;
-  width: fit-content;
-  margin-top: 7rem;
-  padding: 2rem 1.5rem;
-  padding-top: 1.5rem;
-  background: hsl(240, 10%, 16%);
-  border-radius: 0.5rem;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  ${(props) => (!props.remove ? alertEntryAnim : alertExitAnim)}
-`;
-
-const Content = styled.p`
-  padding-top: 0.25rem;
-  padding-bottom: 1rem;
-  font-size: 1.125rem;
-  color: hsl(240, 6%, 75%);
-`;
-
 const elemContains = (rect, x, y) => {
   return rect
     ? rect.x <= x &&
@@ -234,19 +152,12 @@ const AccountSelect = () => {
   const { getAddressAllowance } = useContract();
   const [elemIsVisible, setElemIsVisible] = useState(isSelectAccountOpen);
   const { accounts, selectAccount, signer } = useAccounts();
-  const initialClaimButtonText = "I Accept";
   const [isAllowanceModalOpen, setIsAllowanceModalOpen] = useState(false);
-  // eslint-disable-next-line
-  const [claimButtonText, setClaimButtonText] = useState(
-    initialClaimButtonText
-  );
 
   const [alert, setAlert] = useState({
     isSelectAccountOpen: false,
   });
-  const [alertIsVisible, setAlertIsVisible] = useState(
-    alert.isSelectAccountOpen
-  );
+
   const modalRef = useRef();
   const alertRef = useRef();
 
@@ -290,16 +201,6 @@ const AccountSelect = () => {
       setElemIsVisible(isSelectAccountOpen);
     }
   }, [isSelectAccountOpen]);
-
-  useEffect(() => {
-    if (alert.isSelectAccountOpen === false) {
-      setTimeout(() => {
-        setAlertIsVisible(alert.isSelectAccountOpen);
-      }, 200);
-    } else {
-      setAlertIsVisible(alert.isSelectAccountOpen);
-    }
-  }, [alert.isSelectAccountOpen]);
 
   const closeModal = () => {
     setAlert({
@@ -377,30 +278,6 @@ const AccountSelect = () => {
                 )}
               </StyledSimpleBar>
             </Modal>
-            {alertIsVisible && (
-              <Alert remove={!alert.isSelectAccountOpen} ref={alertRef}>
-                <Title>Claim EVM Account</Title>
-                <Content>
-                  EVM account not claimed.
-                  <br />
-                  Please claim it and try logging in again.
-                  <br />
-                  You will need some Reef in order to pay for the transaction.
-                </Content>
-                <Button
-                  whileHover={{
-                    y: -5,
-                    x: 0,
-                    scale: 1.01,
-                  }}
-                  whileTap={{
-                    scale: 0.99,
-                  }}
-                >
-                  {claimButtonText}
-                </Button>
-              </Alert>
-            )}
           </BackDrop>
         )}
       </LazyMotion>

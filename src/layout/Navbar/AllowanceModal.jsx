@@ -9,7 +9,6 @@ import { allowance } from "@constants/notifications";
 import { ALLOWANCE_AMOUNT } from "@constants/app";
 
 const ModalContainer = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
   width: 100vw;
   height: 100vh;
   z-index: 999;
@@ -17,6 +16,7 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -5%);
   position: absolute;
+  display: ${(props) => !props.isOpen && 'none'};
 `;
 
 const Button = styled.button`
@@ -103,7 +103,7 @@ export default function AllowanceModal({ isOpen, setIsOpen }) {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer isOpen={isOpen}>
       <Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
