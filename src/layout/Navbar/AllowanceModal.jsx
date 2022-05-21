@@ -8,9 +8,15 @@ import { toast } from "react-toastify";
 import { allowance } from "@constants/notifications";
 import { ALLOWANCE_AMOUNT } from "@constants/app";
 
-const ModalContainer = styled(Modal)`
-  position: relative;
-  top: 200%;
+const ModalContainer = styled.div`
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -5%);
+  position: absolute;
 `;
 
 const Button = styled.button`
@@ -97,20 +103,22 @@ export default function AllowanceModal({ isOpen, setIsOpen }) {
   };
 
   return (
-    <ModalContainer
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      onClose={handleCancel}
-      title="Allowance needed"
-    >
-      <div>
-        You need to provide allowance to PPN in order to mint.
-        Do you want to proceed?
-      </div>
-      <ButtonsContainer>
-        <CancelButton onClick={handleCancel}>Cancel</CancelButton>
-        <AcceptButton onClick={handleAccept}>Accept</AcceptButton>
-      </ButtonsContainer>
+    <ModalContainer>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={handleCancel}
+        title="Allowance needed"
+      >
+        <div>
+          You need to provide allowance to PPN in order to mint. Do you want to
+          proceed?
+        </div>
+        <ButtonsContainer>
+          <CancelButton onClick={handleCancel}>Cancel</CancelButton>
+          <AcceptButton onClick={handleAccept}>Accept</AcceptButton>
+        </ButtonsContainer>
+      </Modal>
     </ModalContainer>
   );
 }
