@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { motion, useAnimation } from "framer-motion";
 import { DESKTOP } from "@constants/devices";
-import useScreenSize from "@hooks/useResponsiveness";
+import useResponsiveness from "@hooks/useResponsiveness";
 
 const HeaderContainer = styled.h1`
   display: flex;
@@ -27,7 +27,7 @@ const HighlightedSpan = styled.span`
 `;
 
 export default function Header() {
-  const { currentDevice } = useScreenSize();
+  const { currentDevice } = useResponsiveness();
   const ctrls = useAnimation();
 
   const characterAnimation = {

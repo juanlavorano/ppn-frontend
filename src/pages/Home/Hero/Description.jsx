@@ -5,7 +5,7 @@ import useAccounts from "@hooks/useAccounts";
 import useLayout from "@hooks/useLayout";
 import { toast } from "react-toastify";
 import { mint as mintNotification } from "@constants/notifications";
-import useScreenSize from "@hooks/useResponsiveness";
+import useResponsiveness from "@hooks/useResponsiveness";
 import { MOBILE } from "@constants/devices";
 
 const DescriptionContainer = styled.div`
@@ -51,7 +51,7 @@ export default function Description() {
   const { selectedAccount } = useAccounts();
   const { setIsSelectAccountOpen } = useLayout();
   const [isProcessing, setIsProcessing] = useState(false);
-  const {currentDevice} = useScreenSize()
+  const {currentDevice} = useResponsiveness()
 
   const handleMint = async () => {
     if (!selectedAccount)

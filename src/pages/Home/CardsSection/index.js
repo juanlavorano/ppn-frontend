@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import useScreenSize from "@hooks/useResponsiveness";
+import useResponsiveness from "@hooks/useResponsiveness";
 import Card from "@components/Card";
 import ppn from "@static/jpeg/PPN_1.jpeg";
 import reef from "@static/jpeg/Reef.jpeg";
@@ -27,7 +27,7 @@ const ContainerItem = styled.div`
 `;
 
 export default function CardsSection() {
-  const { currentDevice } = useScreenSize();
+  const { currentDevice } = useResponsiveness();
 
   return (
     <Section>

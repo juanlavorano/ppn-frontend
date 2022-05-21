@@ -15,7 +15,7 @@ function debounce(fn, ms) {
   };
 }
 
-export function useScreenSize() {
+export function useResponsiveness() {
   const [currentDevice, setCurrentDevice] = useState();
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
@@ -55,4 +55,4 @@ export function useScreenSize() {
   return { dimensions, breakpoints, currentDevice };
 }
 
-export default useScreenSize;
+export default useResponsiveness;

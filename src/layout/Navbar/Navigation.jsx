@@ -25,47 +25,43 @@ const swipeRight = keyframes`
 `;
 
 const modalEntryAnim = css`
-	animation: ${swipeLeft} 0.2s var(--easing) forwards;
+  animation: ${swipeLeft} 0.2s var(--easing) forwards;
 `;
 
 const modalExitAnim = css`
-	animation: ${swipeRight} 0.2s ease forwards;
+  animation: ${swipeRight} 0.2s ease forwards;
 `;
 
 const Wrapper = styled.div`
-	position: absolute;
-	height: 100vh;
-	width: 100%;
-	top: 0;
-	background: var(--app-container-bg-primary);
-	font-family: var(--font-family);
-	padding-top: 6rem;
-	padding-left: 2rem;
-	color: var(--app-text);
-	z-index: -1;
-	${props => (!props.remove ? modalEntryAnim : modalExitAnim)};
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 10px;
+  padding-top: 6rem;
+  z-index: -1;
+  ${(props) => (!props.remove ? modalEntryAnim : modalExitAnim)};
 `;
 
 const Navigation = ({ isOpen }) => {
-	const [isVisible, setIsVisible] = useState(false);
-	useEffect(() => {
-		if (isOpen === false) {
-			setTimeout(() => {
-				setIsVisible(false);
-			}, 200);
-		} else {
-			setIsVisible(isOpen);
-		}
-	}, [isOpen]);
-	return (
-		<>
-			{isVisible && (
-				<Wrapper remove={!isOpen}>
-					<LinkGroups />
-				</Wrapper>
-			)}
-		</>
-	);
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    if (isOpen === false) {
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 200);
+    } else {
+      setIsVisible(isOpen);
+    }
+  }, [isOpen]);
+  return (
+    <>
+      {isVisible && (
+        <Wrapper remove={!isOpen}>
+          <LinkGroups />
+        </Wrapper>
+      )}
+    </>
+  );
 };
 
 export default Navigation;
