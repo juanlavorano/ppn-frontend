@@ -11,6 +11,7 @@ const FooterContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  padding: 1rem;
 `;
 
 export default function Footer() {

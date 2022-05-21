@@ -1,28 +1,33 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { motion, useAnimation } from "framer-motion";
+import { DESKTOP } from "@constants/devices";
+import useScreenSize from "@hooks/useResponsiveness";
 
 const HeaderContainer = styled.h1`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
   flex: 1;
+
   font-weight: 900;
   font-size: 3.5em;
   text-align: center;
   margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 2.5rem 8rem;
-  filter: brightness(80%);
+`;
+
+const Line = styled(motion.div)`
+  white-space: nowrap;
+  color: ${(props) => props.theme.colors.secondary};
 `;
 
 const HighlightedSpan = styled.span`
   color: ${(props) => props.theme.colors.white};
 `;
 
-const Line = styled(motion.div)`
-  color: ${(props) => props.theme.colors.secondary};
-`;
 export default function Header() {
+  const { currentDevice } = useScreenSize();
   const ctrls = useAnimation();
 
   const characterAnimation = {
@@ -45,7 +50,7 @@ export default function Header() {
   }, [ctrls]);
 
   return (
-    <HeaderContainer>
+    <HeaderContainer device={currentDevice}>
       <Line
         initial="hidden"
         aria-hidden="true"
@@ -62,7 +67,10 @@ export default function Header() {
         custom={2}
         variants={characterAnimation}
       >
-        Get <HighlightedSpan>Private People Networks</HighlightedSpan>
+        Get{" "}
+        <HighlightedSpan>
+          {currentDevice === DESKTOP ? "Private People Networks" : "PPN"}
+        </HighlightedSpan>
       </Line>
     </HeaderContainer>
   );

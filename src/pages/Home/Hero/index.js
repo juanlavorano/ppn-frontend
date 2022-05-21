@@ -10,10 +10,10 @@ const Container = styled.div`
   background-position: 50% 0;
   background-attachment: fixed;
   background-size: auto;
-  padding: 10rem;
+  padding: 8rem 0;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   overflow-x: hidden;
 `;
 
