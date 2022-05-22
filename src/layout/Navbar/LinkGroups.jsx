@@ -3,6 +3,7 @@ import useResponsiveness from "@hooks/useResponsiveness";
 import { DESKTOP } from "@constants/devices";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import SignInBtn from "./SignInBtn";
 
 const LinkContainer = styled.div`
   display: flex;
@@ -55,19 +56,18 @@ const LinkGroups = ({ isAtTop }) => {
 
   return (
     <LinkContainer isAtTop={isAtTop} device={currentDevice}>
-      <>
-        {routes.map((route) => (
-          <NavLink
-            key={route.link}
-            to={route.link}
-            className={(navData) =>
-              navData.isActive ? "nav-selected" : "nav-links"
-            }
-          >
-            {route.name}
-          </NavLink>
-        ))}
-      </>
+      {routes.map((route) => (
+        <NavLink
+          key={route.link}
+          to={route.link}
+          className={(navData) =>
+            navData.isActive ? "nav-selected" : "nav-links"
+          }
+        >
+          {route.name}
+        </NavLink>
+      ))}
+      {currentDevice !== DESKTOP && <SignInBtn />}
     </LinkContainer>
   );
 };

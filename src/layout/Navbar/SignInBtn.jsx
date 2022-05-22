@@ -5,6 +5,7 @@ import { LazyMotion, domAnimation } from "framer-motion";
 import { BtnBaseAnimated } from "components/Buttons";
 import useAccounts from "hooks/useAccounts";
 import useLayout from "@hooks/useLayout";
+import { breakpoints, down } from "@styles/devices";
 
 const Btn = styled(BtnBaseAnimated)`
   display: flex;
@@ -14,6 +15,11 @@ const Btn = styled(BtnBaseAnimated)`
   border-radius: 1000rem;
   height: 2.5rem;
   z-index: 2;
+  
+  ${down(breakpoints.laptop)} {
+    color: white;
+    padding: 0;
+  }
 `;
 
 const AnimBtn = ({ children, onClick }) => (

@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
+import { elemContains } from "@utils/helpers";
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
@@ -48,15 +49,6 @@ export default function Modal({ children, title, isOpen, setIsOpen, onClose }) {
   const closeModal = () => {
     setIsOpen(false);
     if (onClose) onClose();
-  };
-
-  const elemContains = (rect, x, y) => {
-    return rect
-      ? rect.x <= x &&
-          x <= rect.x + rect.width &&
-          rect.y <= y &&
-          y <= rect.y + rect.height
-      : false;
   };
 
   const handleClickOutside = (e) => {

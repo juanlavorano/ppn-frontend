@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MOBILE, TABLET, DESKTOP } from "@constants/devices";
+import { breakpoints } from "@styles/devices";
 
 function debounce(fn, ms) {
   let timer;
@@ -22,19 +23,14 @@ export function useResponsiveness() {
     width: window.innerWidth,
   });
 
-  const breakpoints = {
-    xs: 0,
-    sm: 600,
-    md: 960,
-    lg: 1280,
-    xl: 1920,
-  };
-
   useEffect(() => {
-    if (dimensions.width >= 1024) setCurrentDevice(DESKTOP);
-    else if (dimensions.width >= 601 && dimensions.width < 1024)
+    if (dimensions.width >= breakpoints.laptop) setCurrentDevice(DESKTOP);
+    else if (
+      dimensions.width >= breakpoints.tablet &&
+      dimensions.width < breakpoints.laptop
+    )
       setCurrentDevice(TABLET);
-    else if (dimensions.width <= 600) setCurrentDevice(MOBILE);
+    else if (dimensions.width <= breakpoints.tablet) setCurrentDevice(MOBILE);
   }, [dimensions.width]);
 
   useEffect(() => {

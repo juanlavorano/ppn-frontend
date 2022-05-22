@@ -44,6 +44,7 @@ const Wrapper = styled.div`
 
 const Navigation = ({ isOpen }) => {
   const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     if (isOpen === false) {
       setTimeout(() => {
@@ -53,6 +54,7 @@ const Navigation = ({ isOpen }) => {
       setIsVisible(isOpen);
     }
   }, [isOpen]);
+
   return (
     <>
       {isVisible && (

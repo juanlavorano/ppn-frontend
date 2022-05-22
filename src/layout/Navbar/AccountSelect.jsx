@@ -15,6 +15,7 @@ import useLayout from "@hooks/useLayout";
 import useContract from "@hooks/useContract";
 import { MIN_APPROVE_REEF } from "@constants/app";
 import AllowanceModal from "./AllowanceModal";
+import { down, breakpoints } from "@styles/devices";
 
 const StyledSimpleBar = styled(SimpleBar)`
   min-width: 12rem;
@@ -65,6 +66,13 @@ const BackDrop = styled.div`
   width: 100vw;
   background: rgba(0, 0, 0, 0.5);
   overflow: hidden;
+
+  ${down(breakpoints.laptop)} {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 99;
+  }
 `;
 
 const Modal = styled.div`
@@ -82,6 +90,8 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  z-index: 100;
+
   .close-btn {
     background: hsl(236, 10%, 23%);
     color: hsl(240, 6%, 75%);
@@ -254,6 +264,7 @@ const AccountSelect = () => {
                           return (
                             <m.p
                               onClick={() => handleAccountChange(account)}
+                              onTouchStart={() => handleAccountChange(account)}
                               className="account-name"
                               whileHover={{
                                 y: -2.5,
