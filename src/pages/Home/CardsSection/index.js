@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import useResponsiveness from "@hooks/useResponsiveness";
 import Card from "@components/Card";
 import ppn from "@static/jpeg/PPN_1.jpeg";
 import reef from "@static/jpeg/Reef.jpeg";
 import ipfs from "@static/png/Ipfs-logo-1024-ice-text.png";
-import { DESKTOP } from "@constants/devices";
+import { down, breakpoints } from "@styles/devices";
 
 const Section = styled.div`
   background-color: ${(props) => props.theme.colors.black};
@@ -16,9 +15,12 @@ const Section = styled.div`
 const CardsContainer = styled.div`
   min-height: 100vh;
   display: flex;
-  flex-direction: ${(props) => props.direction};
   justify-content: space-between;
   align-items: center;
+
+  ${down(breakpoints.laptop)} {
+    flex-direction: column;
+  }
 `;
 
 const ContainerItem = styled.div`
@@ -27,11 +29,9 @@ const ContainerItem = styled.div`
 `;
 
 export default function CardsSection() {
-  const { currentDevice } = useResponsiveness();
-
   return (
     <Section>
-      <CardsContainer direction={currentDevice === DESKTOP ? "row" : "column"}>
+      <CardsContainer>
         <ContainerItem>
           <Card backgroundImage={ppn}>PPN 😎</Card>
         </ContainerItem>

@@ -4,12 +4,21 @@ import useAccounts from "@hooks/useAccounts";
 import useContract from "@hooks/useContract";
 import styled from "styled-components";
 import AlertSign from "./AlertSign";
+import {down, breakpoints} from '@styles/devices'
 
 const RootContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
   grid-gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  ${down(breakpoints.laptop)} {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  ${down(breakpoints.tablet)} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -111,7 +120,7 @@ export default function MyCollection() {
 
       {!!myNFTs.length &&
         myNFTs.map((nft) => (
-          <ImgContainer>
+          <ImgContainer key={nft.url}>
             <Img src={nft.url} alt={`nft-${nft.id}`} />
             <ImgName>#{nft.id}</ImgName>
           </ImgContainer>
